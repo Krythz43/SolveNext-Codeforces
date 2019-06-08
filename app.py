@@ -4,11 +4,11 @@ from operator import itemgetter
 
 
 def initialize():
-    user="nks43"
+    users=["pshishod2645"]
     ROUND=1000
     lower_bound=1700
-    upper_bound=4000
-    return user,ROUND,lower_bound,upper_bound
+    upper_bound=1900
+    return users,ROUND,lower_bound,upper_bound
 
 
 
@@ -103,27 +103,27 @@ def save_list(problems,solved_check):
 
 
 
-def get_solved(user):
-    
-    link="https://codeforces.com/api/user.status?handle="+user
-    response=requests.get(link)
-    content=response.json()["result"]
+def get_solved(users):
     
     solved_check={}
     count=0
-    for i in range (len(content)):
-        if content[i]["verdict"]=="OK":
-            if str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"]) not in solved_check.keys():
-                count=count+1
-                solved_check[str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"])]="true"
-    
+    for user in users : 
+        link="https://codeforces.com/api/user.status?handle="+user
+        response=requests.get(link)
+        content=response.json()["result"]
+        
+        for i in range (len(content)):
+            if content[i]["verdict"]=="OK":
+                if str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"]) not in solved_check.keys():
+                    count=count+1
+                    solved_check[str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"])]="true"
+        
     return count,solved_check
 
 
 
 if __name__ == "__main__":
-    user,ROUND,lower_bound,upper_bound=initialize()
-
+    users,ROUND,lower_bound,upper_bound=initialize()
     problems_orig,stats_orig=getData()
     print ("Total problems present :"+str(len(problems_orig)))
     print ("Total problem stats :"+str(len(stats_orig)))
@@ -133,12 +133,13 @@ if __name__ == "__main__":
     sorted_list=sortProblems(focus_problems)
     problems=filterProblems(sorted_list,lower_bound,upper_bound)
     
-    solved_count,solved_check=get_solved(user)
+    solved_count,solved_check=get_solved(users)
     print("Number of problems solved is "+str(solved_count))
     print("Final list length: "+str(len(problems)))
 
     remaining_problems=save_list(problems,solved_check)
+    print("Problems solved in this category : " + str(len(problems) - remaining_problems))
     print("Remaining problems to solve in list:"+str(remaining_problems))
-   
+
     
-    
+
