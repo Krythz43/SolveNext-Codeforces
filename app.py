@@ -4,10 +4,10 @@ from operator import itemgetter
 
 
 def initialize():
-    users=["pshishod2645"]
+    users=["nks43"]
     ROUND=1000
     lower_bound=1700
-    upper_bound=1900
+    upper_bound=4000
     return users,ROUND,lower_bound,upper_bound
 
 
