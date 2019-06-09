@@ -1,4 +1,5 @@
 import requests
+import csv
 from operator import itemgetter
 
 
@@ -89,15 +90,17 @@ def filterProblems(problems,lower_bound,upper_bound):
 def save_list(problems,solved_check):
 
     problem_count=0
-    # TargetFile=open("rating1700.txt","a")
-    for problem in problems:
-        if str(problem["contestId"])+str(problem["index"]) not in solved_check.keys():      #COMMENT THIS LINE TO DISPLAY SOLVED QUESTIONS ALSO
-            text="\tsolved by:"+str(problem["solved"])+"\t"+str(problem["contestId"])+str(problem["index"])+"\trating:"+str(problem["rating"])+"\t https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"])+"\t"+safeStr(problem["name"]+'\n')
-            print(text)
-            # TargetFile.write(text)
-            problem_count=problem_count+1
+    TargetFile=open("rating1700.csv","a")
+    with TargetFile : 
+        writer = csv.writer(TargetFile)
+        for problem in problems:
+            if safeStr(problem["name"]) not in solved_check.keys():      #COMMENT THIS LINE TO DISPLAY SOLVED QUESTIONS ALSO
+                text="\t"+str(problem["solved"])+"\t"+str(problem["contestId"])+str(problem["index"])+"\t:"+str(problem["rating"])+"\t https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"])+"\t"+safeStr(problem["name"]+'\n')
+                row = [str(problem["solved"]), str(problem["contestId"])+ str(problem["index"]), str(problem["rating"]), "https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"]), safeStr(problem["name"]) ]
+                print(text)
+                #writer.writerow(row)
+                problem_count=problem_count+1
     
-    # TargetFile.close()
     return problem_count
 
 
@@ -114,9 +117,9 @@ def get_solved(users):
         
         for i in range (len(content)):
             if content[i]["verdict"]=="OK":
-                if str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"]) not in solved_check.keys():
+                if safeStr(content[i]["problem"]["name"]) not in solved_check.keys():
                     count=count+1
-                    solved_check[str(content[i]["problem"]["contestId"])+str(content[i]["problem"]["index"])]="true"
+                    solved_check[safeStr(content[i]["problem"]["name"])]="true"
         
     return count,solved_check
 
@@ -140,6 +143,3 @@ if __name__ == "__main__":
     remaining_problems=save_list(problems,solved_check)
     print("Problems solved in this category : " + str(len(problems) - remaining_problems))
     print("Remaining problems to solve in list:"+str(remaining_problems))
-
-    
-
