@@ -6,10 +6,11 @@ from operator import itemgetter
 
 def initialize():
     users=["nks43"]
+    tags=[]
     ROUND=1000
-    lower_bound=1700
+    lower_bound=1800
     upper_bound=4000
-    return users,ROUND,lower_bound,upper_bound
+    return users,tags,ROUND,lower_bound,upper_bound
 
 
 
@@ -92,10 +93,10 @@ def save_list(problems,solved_check):
     problem_count=0
     TargetFile=open("rating1700.csv","a")
     with TargetFile : 
-        writer = csv.writer(TargetFile)
+        # writer = csv.writer(TargetFile)
         for problem in problems:
             if safeStr(problem["name"]) not in solved_check.keys():      #COMMENT THIS LINE TO DISPLAY SOLVED QUESTIONS ALSO
-                row = [str(problem["solved"]), str(problem["contestId"])+ str(problem["index"]), str(problem["rating"]), "https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"]), safeStr(problem["name"]) ]
+                # row = [str(problem["solved"]), str(problem["contestId"])+ str(problem["index"]), str(problem["rating"]), "https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"]), safeStr(problem["name"]) ]
                 text_console="solved by:"+str(problem["solved"])+"\t"+str(problem["contestId"])+str(problem["index"])+"\trating:"+str(problem["rating"])+"\t https://codeforces.com/problemset/problem/"+str(problem["contestId"])+"/"+str(problem["index"])+"\t"+safeStr(problem["name"])
 
                 print(text_console)
@@ -124,10 +125,23 @@ def get_solved(users):
         
     return count,solved_check
 
+def filter_problems_by_tags(problems,tags):
+
+    required_list=[]
+
+    for problem in problems:
+        for tag in tags:
+            if tag in problem["tags"]:
+                required_list.append(problem)
+                break
+
+    return required_list
+
+
 
 
 if __name__ == "__main__":
-    users,ROUND,lower_bound,upper_bound=initialize()
+    users,tags,ROUND,lower_bound,upper_bound=initialize()
     problems_orig,stats_orig=getData()
     print ("Total problems present :"+str(len(problems_orig)))
     print ("Total problem stats :"+str(len(stats_orig)))
@@ -136,6 +150,8 @@ if __name__ == "__main__":
     focus_problems,problem_count=modify(problems_orig,stats_orig,ROUND)
     sorted_list=sortProblems(focus_problems)
     problems=filterProblems(sorted_list,lower_bound,upper_bound)
+    if len(tags)>0:
+        problems=filter_problems_by_tags(problems,tags)
     
     solved_count,solved_check=get_solved(users)
     print("Number of problems solved is "+str(solved_count))
