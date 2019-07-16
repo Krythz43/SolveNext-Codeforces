@@ -11,6 +11,10 @@ Creates a list of recent problems given rating of the user
 
 and thats all you need to do!
 
+### Usage under Proxy
+
+Right now, you need to edit the get request calls and uncomment the one that has the parameter ```Proxies=proxy``` instead of the normal one. I shall work on this later to make this more userfriendly, this is just a quick fix. These two functions are ```getData()``` and ```get_solved()``` each making one API get request.
+
 ### Additional Features
 
 - FILTER BY TAGS: In the initialize function, you can add the tags that you want in the ```tags=[]``` list to get problems from that particular codeforces tag. For example if you want to solve problems from dp, add it as ```tags=["dp"]``` and if you want to solve problems from dp and greedy, add it as ```tags=["dp",greedy"]```.

@@ -2,13 +2,22 @@ import requests
 import csv
 from operator import itemgetter
 
+#Use your custom proxy and ignore this if you are not sure what to do.
+http_proxy  = "http://172.16.2.30:8080"
+https_proxy = "https://172.16.2.30:8080"
+
+proxy = { 
+          "http"  : http_proxy, 
+          "https" : https_proxy,
+        }
+
 
 
 def initialize():
     users=["nks43"]
     tags=[]
-    ROUND=1000
-    lower_bound=1800
+    ROUND=700
+    lower_bound=1500
     upper_bound=4000
     return users,tags,ROUND,lower_bound,upper_bound
 
@@ -18,7 +27,11 @@ def initialize():
 
 def getData():
     link="https://codeforces.com/api/problemset.problems?"
-    response=requests.get(link)
+    response=requests.get(link,proxies=proxy)
+    # comment the above line if your network doesn't use a proxy
+
+    # response=requests.get(link)
+    # uncomment the above line if your network doesn't use a proxy
     content=response.json()["result"]
     
     return content["problems"],content["problemStatistics"]
@@ -58,6 +71,9 @@ def sortProblems(problems):
 
 
 def safeStr(obj):
+    '''
+    Certain problems like Tree Generator TM have non-unicode characters which cannot be used as Dict keys and hence they are converted back to ascii
+    '''
     try: return str(obj)
     except UnicodeEncodeError:
         return obj.encode('ascii', 'ignore').decode('ascii')
@@ -89,6 +105,9 @@ def filterProblems(problems,lower_bound,upper_bound):
 #
 
 def save_list(problems,solved_check):
+    '''
+    The problems are either saved or printed by editing this function.
+    '''
 
     problem_count=0
     TargetFile=open("rating1700.csv","a")
@@ -109,12 +128,19 @@ def save_list(problems,solved_check):
 
 
 def get_solved(users):
-    
+    '''
+    Requests all the problems solved by a user and marks them as solved and hence excluding them from the final list to be printed.
+    '''
     solved_check={}
     count=0
     for user in users : 
         link="https://codeforces.com/api/user.status?handle="+user
-        response=requests.get(link)
+        response=requests.get(link,proxies=proxy)
+        # comment the above line if your network doesn't use a proxy
+
+        # response=requests.get(link)
+        # uncomment the above line if your network doesn't use a proxy
+
         content=response.json()["result"]
         
         for i in range (len(content)):
