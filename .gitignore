@@ -1,1 +1,9 @@
+#Output Files
+rating1700.txt
+rating1700.csv
+
+#vscode
+.vscode/
+
+#node
 node_modules
