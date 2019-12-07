@@ -1,5 +1,4 @@
 const request = require('request')
-const users = ["zenolus", "nks43"]
 const sendGET = (user) => {
     return new Promise((resolve, reject) => {
         request(`https://codeforces.com/api/user.status?handle=${user}`, (error, response, body) => {
