@@ -4,10 +4,10 @@ const sendGET = (user) => {
         request({
             'url':`https://codeforces.com/api/user.status?handle=${user}`,
             'method': "GET",
-            //For the rest of the world, uncommetn this
-            // 'proxy':''
+            //For the rest of the world, uncomment this
+             'proxy':''
             // For Usage in KGP uncomment the below lines
-            'proxy':'http://172.16.2.30:8080'
+            //'proxy':'http://172.16.2.30:8080'
         }, (error, response, body) => {
             const content = JSON.parse(response.body).result
             resolve(content)
