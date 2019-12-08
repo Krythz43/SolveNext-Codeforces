@@ -1,7 +1,14 @@
 const request = require('request')
 const sendGET = () => {
     return new Promise((resolve, reject) => {
-        request(`https://codeforces.com/api/problemset.problems?`, (error, response, body) => {
+        request({
+            'url':`https://codeforces.com/api/problemset.problems?`,
+            'method': "GET",
+            //For the rest of the world, uncommetn this
+            'proxy':''
+            //For Usage in KGP uncomment the below lines
+            // 'proxy':'http://172.16.2.30:8080'
+            }, (error, response, body) => {
             const content = JSON.parse(response.body).result
             resolve(content)
         })
