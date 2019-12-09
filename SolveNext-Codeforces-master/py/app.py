@@ -135,8 +135,8 @@ def save_list(problems, solved_check, number_of_problems,save=False):
 
     problem_count = 0
     if(save):
-        with open("rating1700.csv", "a") as f:
-            writer = csv.writer(f)
+        f=open("rating1700.csv", "a")
+        writer = csv.writer(f)
     for problem in problems:
         if safeStr(
                     problem["name"]) not in solved_check.keys():  # COMMENT THIS LINE TO DISPLAY SOLVED QUESTIONS ALSO
