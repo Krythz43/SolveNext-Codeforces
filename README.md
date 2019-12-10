@@ -23,7 +23,7 @@ Right now, you need to edit the get request calls and uncomment the one that has
 
 - Edit your preferences from the config.env file before running the program or else you can use the CLI to enter the required data
 - Open js folder (```cd js```)
-- run ```node index.js```
+- run ```proxychains node index.js```
 
 and thats all you need to do!
 
