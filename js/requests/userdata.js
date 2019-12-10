@@ -9,6 +9,14 @@ const sendGET = (user) => {
             // For Usage in KGP uncomment the below lines
             //'proxy':'http://172.16.2.30:8080'
         }, (error, response, body) => {
+            if(error){
+                console.log("Couldn't collect user data from CodeForces API.")
+                console.error("Error details:\n", error, "\nExiting...")
+            }
+            if(JSON.parse(response.body).status.toString() !== "OK"){
+                console.log(`Ignoring invalid CodeForces handle: ${user}`)
+                resolve([])
+            }
             const content = JSON.parse(response.body).result
             resolve(content)
         })

@@ -9,8 +9,16 @@ const sendGET = () => {
             //For Usage in KGP uncomment the below lines
             // 'proxy':'http://172.16.2.30:8080'
             }, (error, response, body) => {
-            const content = JSON.parse(response.body).result
-            resolve(content)
+                if(error){
+                    console.log()
+                    if(error.code === 'ENOTFOUND')
+                        console.log("Couldn't connect to CodeForces API! Check your internet connection.\nExiting...")
+                    else
+                        console.error("Error details:\n", error, "\nExiting...")
+                    process.exit(0)
+                }
+                const content = JSON.parse(response.body).result
+                resolve(content)
         })
     })
 }
