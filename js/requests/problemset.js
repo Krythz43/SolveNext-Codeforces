@@ -4,7 +4,7 @@ const sendGET = () => {
         request({
             'url':`https://codeforces.com/api/problemset.problems?`,
             'method': "GET",
-            //For the rest of the world, uncommetn this
+            //For the rest of the world, uncomment this
             'proxy':''
             //For Usage in KGP uncomment the below lines
             // 'proxy':'http://172.16.2.30:8080'

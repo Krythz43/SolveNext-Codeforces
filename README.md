@@ -21,16 +21,15 @@ Right now, you need to edit the get request calls and uncomment the one that has
 
 ## JavaScript Version : How to use
 
+- Edit your preferences from the config.env file before running the program or else you can use the CLI to enter the required data
 - Open js folder (```cd js```)
-- In the Initialization section, change the username to your username
-- In the preferences object under Initialization section, set your preferences
 - run ```node index.js```
 
 and thats all you need to do!
 
 ### Usage under Proxy
 
-Right now, you need to edit the get request calls and uncomment the one that has the parameter ```'proxiy:''``` instead of the normal one. I shall work on this later to make this more userfriendly, this is just a quick fix. These two files are listed in the requets folder, please make appropriate changes as mentioned in the requests else your code shall not work as desired.
+Right now, you need to edit the get request calls and uncomment the one that has the parameter ```'proxy:'``` instead of the normal one. I shall work on this later to make this more user-friendly, this is just a quick fix. These two files are listed in the requests folder, please make appropriate changes as mentioned in the requests else your code shall not work as desired.
 
 ## Additional Features
 
