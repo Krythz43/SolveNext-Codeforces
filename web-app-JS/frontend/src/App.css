@@ -1,0 +1,79 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+td, tr {
+  border-bottom: 1px solid #ddd;  
+}
+td {
+  padding: 5px;
+}
+table {
+  border-collapse: separate;
+  overflow: hidden;
+}
+tr.result-row:nth-child(3n+2) {background-color: #FCC800;}
+tr.result-row:nth-child(3n+3) {background-color: #0096FF;}
+tr.result-row:nth-child(3n+4) {background-color: #FF6496;}
+tr td {
+  border-top-left-radius: 500px;
+  border-top-right-radius: 500px;
+  border-bottom-left-radius: 500px;
+  border-bottom-right-radius: 500px;
+}
+button.query {
+  background-color: #FCC800;
+  color: black;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 15px;
+}
+button.add {
+  background-color: #0096FF;
+  color: white;
+  border-radius: 75%;
+  font-size: 20px;
+}
+body {
+  background-color: black;
+  color: white;
+}
+input.userInput {
+  margin-right: 5px;
+  margin-left: 5px;
+}

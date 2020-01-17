@@ -15,7 +15,7 @@ const sendGET = (user) => {
             }
             if(JSON.parse(response.body).status.toString() !== "OK"){
                 console.log(`Ignoring invalid CodeForces handle: ${user}`)
-                resolve([])
+                resolve({error: "Invalid Handle"})
             }
             const content = JSON.parse(response.body).result
             resolve(content)
@@ -23,32 +23,25 @@ const sendGET = (user) => {
     })
 }
 const getData = async (user) => {
+    const result = {
+        solved: [],
+    }
     let content = await sendGET(user)
-    let solved = []
+    if(content.error){
+        result.error = content.error
+        return result
+    }
     content.forEach(data => {
         if(data.verdict === "OK")
-            if(solved.includes(data.problem.name) === false)
-                solved.push(data.problem.name)
+            if(result.solved.includes(data.problem.name) === false)
+                result.solved.push(data.problem.name)
     })
-    return solved
+    return result
 }
-const combineAllUsers = async (users) => {
-    var solved = []
-    var promises = users.map(async user => {
-        const user_data = await getData(user)
-        solved.push(...user_data)
-    })
-    return new Promise((resolve, reject) => {
-        Promise.all(promises)
-            .then(() => {
-                resolve(solved)
-            })
-    })
-}
-const getUsersData = async (users) => {
-    const solved = await combineAllUsers(users)
-    return solved
+const getUserData = async (user) => {
+    const result = await getData(user)
+    return result
 }
 module.exports = {
-    getUsersData,
+    getUserData,
 }
