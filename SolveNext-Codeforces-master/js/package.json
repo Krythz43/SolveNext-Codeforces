@@ -1,0 +1,22 @@
+{
+  "name": "solvenext",
+  "version": "1.0.0",
+  "description": "Creates a list of recent problems given rating of the user",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zenolus/SolveNext-Codeforces.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zenolus/SolveNext-Codeforces/issues"
+  },
+  "homepage": "https://github.com/zenolus/SolveNext-Codeforces#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
