@@ -14,12 +14,13 @@ proxy = {
 
 def initialize():
     users = ["nks43"]
-    tags = ["number theory"]
-    ROUND = 500
+    tags = []
+    ROUND = 800
+    ROUND_UPPER = 1290
     number_of_problems = 10
-    lower_bound = 1600
+    lower_bound = 1800
     upper_bound = 4000
-    return users, tags, ROUND, lower_bound, upper_bound, number_of_problems
+    return users, tags, ROUND, ROUND_UPPER, lower_bound, upper_bound, number_of_problems
 
 
 def getData():
@@ -34,12 +35,12 @@ def getData():
     return content["problems"], content["problemStatistics"]
 
 
-def modify(problems, stats, round):
+def modify(problems, stats, round, ROUND_UPPER):
     focus_problems = {}
     problem_count = 0
 
     for i in range(len(problems)):
-        if problems[i]["contestId"] >= round and 'rating' in problems[i].keys():
+        if problems[i]["contestId"] >= round and ROUND_UPPER >= problems[i]["contestId"] and 'rating' in problems[i].keys():
             focus_problems[problem_count] = problems[i]
             focus_problems[problem_count]["solved"] = stats[i]["solvedCount"]
             problem_count = problem_count + 1
@@ -153,12 +154,12 @@ def filter_problems_by_tags(problems, tags):
 
 
 if __name__ == "__main__":
-    users, tags, ROUND, lower_bound, upper_bound, number_of_problems = initialize()
+    users, tags, ROUND, ROUND_UPPER,lower_bound, upper_bound, number_of_problems = initialize()
     problems_orig, stats_orig = getData()
     print("Total problems present :"+str(len(problems_orig)))
     print("Total problem stats :"+str(len(stats_orig)))
 
-    focus_problems, problem_count = modify(problems_orig, stats_orig, ROUND)
+    focus_problems, problem_count = modify(problems_orig, stats_orig, ROUND,ROUND_UPPER)
     sorted_list = sortProblems(focus_problems)
     problems = filterProblems(sorted_list, lower_bound, upper_bound)
     if len(tags) > 0:
